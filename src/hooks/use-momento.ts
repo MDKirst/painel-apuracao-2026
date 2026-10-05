@@ -16,11 +16,13 @@ export type Momento = {
   projL?: number
   porUf: Record<string, UFVivo>
   hora: string
+  /** texto para frases: "às 18h46" ou "no resultado final" */
+  quando: string
   det: string
   final?: number
 }
 
-const VAZIO: Momento = { pronto: false, pct: 0, porUf: {}, hora: '', det: '' }
+const VAZIO: Momento = { pronto: false, pct: 0, porUf: {}, hora: '', quando: '', det: '' }
 
 export function useMomento(): Momento {
   const { modo, t } = useApuracao()
@@ -41,6 +43,7 @@ export function useMomento(): Momento {
       projL: vivo.proj?.[1],
       porUf: vivo.porUf,
       hora: r.hora.slice(11, 16).replace(':', 'h'),
+      quando: `às ${r.hora.slice(11, 16).replace(':', 'h')}`,
       det: `${fmtInt(r.secoes)} de ${fmtInt(r.totalSecoes)} urnas`,
     }
   }
@@ -76,6 +79,7 @@ export function useMomento(): Momento {
     projL: pj[1] ?? undefined,
     porUf,
     hora: hhmm(h.tempos[i]),
+    quando: i === h.tempos.length - 1 ? 'no resultado final' : `às ${hhmm(h.tempos[i])}`,
     det: `${fmtInt(br[3])} votos válidos somados`,
     final: h.brasil.margem_pp,
   }

@@ -9,6 +9,7 @@ import {
   corMargem,
   fmt,
   fmtInt,
+  pctPrec,
   textoSobre,
 } from '@/lib/eleicao'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -69,6 +70,7 @@ function Detalhe({ uf, v }: { uf: string | null; v: UFVivo | null }) {
   if (!uf || !v)
     return <p className='text-sm text-muted-foreground'>Passe o mouse ou toque num estado para ver os números completos.</p>
   const m = v.flavio != null && v.lula != null ? v.flavio - v.lula : null
+  const casas = pctPrec(v.flavio, v.lula)
   return (
     <div className='space-y-3 text-sm'>
       <div>
@@ -93,12 +95,19 @@ function Detalhe({ uf, v }: { uf: string | null; v: UFVivo | null }) {
           </span>
           <span className='tabular text-end'>
             <b>{fmtInt(votos as number | undefined)}</b>
-            <span className='ms-1 text-xs text-muted-foreground'>{fmt(pct as number | undefined, 1)}%</span>
+            <span className='ms-1 text-xs text-muted-foreground'>{fmt(pct as number | undefined, casas)}%</span>
           </span>
         </div>
       ))}
       <p className='text-xs text-muted-foreground'>
-        Vantagem: <b className='text-foreground'>{m == null ? '–' : `${m > 0 ? 'Flávio' : 'Lula'} +${fmt(Math.abs(m), 1)} pp`}</b>
+        Vantagem:{' '}
+        <b className='text-foreground'>
+          {m == null || v.votosF == null || v.votosL == null
+            ? '–'
+            : v.votosF === v.votosL
+              ? 'empate'
+              : `${v.votosF > v.votosL ? 'Flávio' : 'Lula'} +${fmtInt(Math.abs(v.votosF - v.votosL))} votos (${fmt(Math.abs(m), casas)} pp)`}
+        </b>
       </p>
     </div>
   )

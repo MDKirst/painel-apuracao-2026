@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { NOME_UF, REGIAO, UFS, corMargem, fmt, fmtInt, priorUF, sinal, textoSobre } from '@/lib/eleicao'
+import { NOME_UF, REGIAO, UFS, corMargem, fmt, fmtInt, pctPrec, priorUF, sinal, sinalPrec, textoSobre } from '@/lib/eleicao'
 import { useApuracao } from '@/stores/apuracao'
 import { useH1 } from '@/hooks/use-h1'
 import { useMomento } from '@/hooks/use-momento'
@@ -39,7 +39,7 @@ function Chip({ m }: { m: number | null }) {
   if (!cor || m == null) return <span className='text-muted-foreground'>–</span>
   return (
     <span className='tabular inline-block rounded-full px-2 py-0.5 text-xs font-semibold' style={{ background: cor, color: textoSobre(cor) }}>
-      {sinal(m)}
+      {sinalPrec(m)}
     </span>
   )
 }
@@ -96,13 +96,13 @@ export function Estados() {
       { accessorKey: 'regiao', header: ({ column }) => <DataTableColumnHeader column={column} title='Região' /> },
       { accessorKey: 'eleitores', header: ({ column }) => <DataTableColumnHeader column={column} title='Eleitores' />, cell: ({ getValue }) => <span className='tabular'>{fmtInt(getValue() as number)}</span> },
       { accessorKey: 'apurado', header: ({ column }) => <DataTableColumnHeader column={column} title='Apurado' />, cell: num(1, '%') },
-      { accessorKey: 'flavio', header: ({ column }) => <DataTableColumnHeader column={column} title='Flávio' />, cell: num(1, '%') },
-      { accessorKey: 'lula', header: ({ column }) => <DataTableColumnHeader column={column} title='Lula' />, cell: num(1, '%') },
+      { accessorKey: 'flavio', header: ({ column }) => <DataTableColumnHeader column={column} title='Flávio' />, cell: ({ row }) => <span className='tabular'>{row.original.flavio == null ? '–' : `${fmt(row.original.flavio, pctPrec(row.original.flavio, row.original.lula ?? undefined))}%`}</span> },
+      { accessorKey: 'lula', header: ({ column }) => <DataTableColumnHeader column={column} title='Lula' />, cell: ({ row }) => <span className='tabular'>{row.original.lula == null ? '–' : `${fmt(row.original.lula, pctPrec(row.original.flavio ?? undefined, row.original.lula))}%`}</span> },
       { accessorKey: 'margem', header: ({ column }) => <DataTableColumnHeader column={column} title={vivo ? 'Vantagem agora' : 'Vantagem no momento'} />, cell: ({ getValue }) => <Chip m={getValue() as number | null} /> },
       { accessorKey: 'final', header: ({ column }) => <DataTableColumnHeader column={column} title={vivo ? 'Referência 1º turno' : 'Vantagem final'} />, cell: ({ getValue }) => <Chip m={getValue() as number | null} /> },
       ...(!vivo
         ? ([
-            { accessorKey: 'saldo', header: ({ column }) => <DataTableColumnHeader column={column} title='Saldo (votos)' />, cell: ({ getValue }) => <span className='tabular'>{sinal((getValue() as number) / 1000, 0)} mil</span> },
+            { accessorKey: 'saldo', header: ({ column }) => <DataTableColumnHeader column={column} title='Saldo (votos)' />, cell: ({ getValue }) => { const v = getValue() as number; return <span className='tabular'>{Math.abs(v) < 1e4 ? `${sinal(v, 0)} votos` : `${sinal(v / 1000, 0)} mil`}</span> } },
             { accessorKey: 't50', header: ({ column }) => <DataTableColumnHeader column={column} title='Metade chegou' />, cell: ({ row }) => <span className='tabular'>{row.original.t50txt}</span> },
             { accessorKey: 'abst', header: ({ column }) => <DataTableColumnHeader column={column} title='Abstenção' />, cell: num(1, '%') },
           ] as ColumnDef<Linha>[])

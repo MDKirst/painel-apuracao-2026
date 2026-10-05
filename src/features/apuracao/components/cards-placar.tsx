@@ -62,7 +62,7 @@ export function CardsPlacar({ m }: { m: Momento }) {
         titulo='Vantagem no placar'
         icone={Scale}
         valor={`${sinal(margem, 1)} pp`}
-        detalhe={margem == null ? '' : `${quemLidera(margem)} à frente às ${m.hora}`}
+        detalhe={margem == null ? '' : `${quemLidera(margem)} à frente ${m.quando}`}
       />
       <Stat
         titulo='Projeção do resultado'

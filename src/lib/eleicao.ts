@@ -89,6 +89,9 @@ export const fmt = (x: number | null | undefined, d = 1) =>
 export const fmtInt = (x: number | null | undefined) => (x == null ? '–' : Math.round(x).toLocaleString('pt-BR'))
 export const sinal = (x: number | null | undefined, d = 1) =>
   x == null || Number.isNaN(x) ? '–' : (x > 0 ? '+' : x < 0 ? '−' : '±') + fmt(Math.abs(x), d)
+// vantagem com precisão suficiente para não virar "±0,0" numa disputa de poucos votos
+export const sinalPrec = (x: number | null | undefined) => sinal(x, x != null && Math.abs(x) < 0.1 ? 2 : 1)
+export const pctPrec = (a?: number, b?: number) => (a != null && b != null && Math.abs(a - b) < 0.1 ? 2 : 1)
 export const pontos = (x: number, d = 1) => `${fmt(Math.abs(x), d)} ${Math.abs(x) >= 1.95 || Math.abs(x) < 0.95 ? 'pontos' : 'ponto'}`
 export const milhoes = (x: number) => `${fmt(Math.abs(x) / 1e6, 1)} ${Math.abs(x) >= 1.95e6 ? 'milhões' : 'milhão'}`
 // 12,3 mi · 845 mil · 920

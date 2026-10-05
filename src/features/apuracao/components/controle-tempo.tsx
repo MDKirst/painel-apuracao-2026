@@ -66,7 +66,16 @@ function Replay() {
             setT(+e.target.value)
           }}
         />
-        <span className='tabular w-16 text-end text-lg font-semibold'>{hhmm(h.tempos[i])}</span>
+        <span className='tabular w-16 text-end leading-tight'>
+          {i === ultimo ? (
+            <>
+              <span className='block text-lg font-semibold'>Final</span>
+              <span className='block text-[10px] text-muted-foreground'>05/10 {hhmm(h.tempos[i])}</span>
+            </>
+          ) : (
+            <span className='text-lg font-semibold'>{hhmm(h.tempos[i])}</span>
+          )}
+        </span>
       </div>
       <div className='flex flex-wrap items-center gap-2'>
         <span className='text-xs text-muted-foreground'>Pular para:</span>

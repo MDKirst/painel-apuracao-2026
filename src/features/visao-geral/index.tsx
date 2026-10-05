@@ -36,7 +36,7 @@ export function VisaoGeral() {
           </CartaoGrafico>
           <CartaoGrafico
             pergunta='Quem está na frente em cada estado?'
-            resposta={`Situação às ${m.hora}. Azul: Flávio na frente; vermelho: Lula na frente. Em cada estado: quanto já foi contado e os votos de cada candidato.`}
+            resposta={`Situação ${m.quando}. Azul: Flávio na frente; vermelho: Lula na frente. Em cada estado: quanto já foi contado e os votos de cada candidato.`}
             comoLer='Quanto mais forte a cor, maior a vantagem. Estados pequenos do litoral e o DF aparecem com uma linha ligando o estado à etiqueta. No replay, arraste o controle de tempo para ver o mapa mudando durante a noite.'
           >
             <MapaBrasil porUf={m.porUf} />
