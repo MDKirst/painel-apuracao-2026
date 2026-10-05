@@ -39,7 +39,7 @@ function useMarcos(h?: H1Derivado) {
       const porUf: Record<string, UFVivo> = {}
       for (const uf of UFS) porUf[uf] = { pct: s.ufs[uf]?.[i]?.[0] ?? 0, eleitores: h.ufs[uf]?.eleitores }
       const x = avaliar({
-        pct: b[0], votosF: (b[1] * b[3]) / 100, votosL: (b[2] * b[3]) / 100, validos: b[3], porUf,
+        pct: b[0], votosF: b[4], votosL: b[5], validos: b[3], porUf,
         projF: s.projecao_uf[i][0] ?? undefined, projL: s.projecao_uf[i][1] ?? undefined,
       })
       if (!x.segundoTurnoGarantido) ultimoFalso.turno2 = i

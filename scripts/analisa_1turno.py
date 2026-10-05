@@ -212,14 +212,18 @@ def main():
                 round(100 * a["votos"][FLAVIO] / val, 2) if val else None,
                 round(100 * a["votos"][LULA] / val, 2) if val else None,
                 round(val),
+                round(a["votos"][FLAVIO]),
+                round(a["votos"][LULA]),
             ])
         for uf, a in acum_uf.items():
             val = a["validos"]
             serie_uf[uf].append([
                 round(100 * a["secoes"] / total_uf[uf]["secoes"], 1),
-                round(100 * a["votos"][FLAVIO] / val, 1) if val else None,
-                round(100 * a["votos"][LULA] / val, 1) if val else None,
+                round(100 * a["votos"][FLAVIO] / val, 2) if val else None,
+                round(100 * a["votos"][LULA] / val, 2) if val else None,
                 round(val),
+                round(a["votos"][FLAVIO]),
+                round(a["votos"][LULA]),
             ])
         # projeção ajustada por UF, só com o que se saberia ao vivo:
         # o que falta de cada UF vota como o que já veio dela, e o tamanho da UF
@@ -362,6 +366,10 @@ def main():
                           "rec_flavio": x[1], "rec_lula": x[2], "apurado_rec": x[0],
                           "erro_margem_pp": round((x[1] - x[2]) - (f - l), 2)})
 
+    # 1 ponto por minuto até as 02h; depois só a cauda (Exterior, retotalizações) a cada 15 min
+    n_total = len(serie["Brasil"])
+    manter = [i for i in range(n_total) if i * PASSO / 60 <= 540 or i % 15 == 0 or i == n_total - 1]
+
     out = {
         "fonte": "TSE — resultados.tse.jus.br (eleição 6257, pleito 3220). Reconstrução por amostra de seções.",
         "gerado_em": datetime.now().strftime("%d/%m/%Y %H:%M"),
@@ -374,9 +382,11 @@ def main():
         "brasil": resumo(municipios),
         "regioes": {r: resumo(ms) for r, ms in por_regiao.items()},
         "ufs": ufs,
-        "serie": {"inicio": "2026-10-04T17:00:00-03:00", "passo_min": PASSO / 60,
-                  "colunas": ["pct_secoes", "flavio", "lula", "validos_contados"], "colunas_uf": ["pct_secoes", "flavio", "lula", "validos_contados"],
-                  "grupos": serie, "ufs": serie_uf, "projecao_uf": projecao},
+        "serie": {"inicio": "2026-10-04T17:00:00-03:00", "passo_min": PASSO / 60, "minutos": [round(i * PASSO / 60) for i in manter],
+                  "colunas": ["pct_secoes", "flavio_pct", "lula_pct", "validos_contados", "votos_flavio", "votos_lula"], "colunas_uf": ["pct_secoes", "flavio_pct", "lula_pct", "validos_contados", "votos_flavio", "votos_lula"],
+                  "grupos": {g: [v[i] for i in manter] for g, v in serie.items()},
+                  "ufs": {u: [v[i] for i in manter] for u, v in serie_uf.items()},
+                  "projecao_uf": [projecao[i] for i in manter]},
         "kpis": {
             "velocidade": kpi_velocidade,
             "vies_ordem_chegada": vies,

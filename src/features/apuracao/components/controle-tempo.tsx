@@ -23,7 +23,7 @@ function Replay() {
     const id = setInterval(() => {
       const atual = useApuracao.getState().t ?? ultimo
       if (atual >= ultimo) return setTocando(false)
-      setT(Math.min(ultimo, atual + (atual < fimNoite ? 2 : 20)))
+      setT(Math.min(ultimo, atual + (atual < fimNoite ? 2 : 1)))
     }, 90)
     return () => clearInterval(id)
   }, [tocando, ultimo, fimNoite, setT, setTocando])

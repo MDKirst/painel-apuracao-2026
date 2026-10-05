@@ -60,9 +60,10 @@ export type H1 = {
   regioes: Record<Regiao, Resumo>
   ufs: Record<string, ResumoUF>
   serie: {
-    inicio: string; passo_min: number
-    grupos: Record<'Brasil' | Regiao, [number, number | null, number | null, number][]>
-    ufs: Record<string, [number, number | null, number | null, number][]>
+    inicio: string; passo_min: number; minutos?: number[]
+    // [% urnas, % Flávio, % Lula, válidos contados, votos Flávio, votos Lula]
+    grupos: Record<'Brasil' | Regiao, [number, number | null, number | null, number, number, number][]>
+    ufs: Record<string, [number, number | null, number | null, number, number, number][]>
     projecao_uf: [number | null, number | null][]
   }
   kpis: {

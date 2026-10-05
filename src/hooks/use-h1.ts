@@ -14,7 +14,9 @@ async function carregar(): Promise<H1Derivado> {
   const h: H1 = await r.json()
   const t0 = Date.parse(h.serie.inicio)
   const passo = h.serie.passo_min * 60_000
-  const tempos = h.serie.grupos.Brasil.map((_, i) => t0 + i * passo)
+  const tempos = h.serie.minutos
+    ? h.serie.minutos.map((m) => t0 + m * 60_000)
+    : h.serie.grupos.Brasil.map((_, i) => t0 + i * passo)
   const t50Regiao = {} as Record<Regiao, number>
   const t50RegiaoTxt = {} as Record<Regiao, string>
   for (const reg of REGIOES) {

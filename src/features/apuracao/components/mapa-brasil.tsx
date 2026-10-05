@@ -36,7 +36,12 @@ function useMapa() {
 }
 
 function Etiqueta({ x, y, uf, v, ativo }: { x: number; y: number; uf: string; v: UFVivo; ativo: boolean }) {
-  const tem = (v.pct ?? 0) > 0 && v.votosF != null
+  const tem = (v.pct ?? 0) > 0 && v.votosF != null && v.votosL != null
+  // disputa apertada (menos de 2% de diferença): número exato, para "212 mil × 213 mil" não esconder que são 225 votos
+  const exato = tem && Math.abs(v.votosF! - v.votosL!) < 0.02 * Math.max(v.votosF!, v.votosL!)
+  const num = (x?: number) => (exato ? fmtInt(x) : compacto(x))
+  const fLidera = tem && v.votosF! > v.votosL!
+  const lLidera = tem && v.votosL! > v.votosF!
   return (
     <g transform={`translate(${x - LARG / 2},${y - ALT / 2})`} pointerEvents='none' className='max-sm:hidden'>
       <rect width={LARG} height={ALT} rx={7} fill='var(--card)' fillOpacity={0.94} stroke={ativo ? 'var(--foreground)' : 'var(--border)'} />
@@ -47,12 +52,14 @@ function Etiqueta({ x, y, uf, v, ativo }: { x: number; y: number; uf: string; v:
         </tspan>
       </text>
       <rect x={8} y={23} width={7} height={7} rx={1.5} fill='var(--flavio)' />
-      <text x={19} y={30} fontSize={10.5} fill='var(--foreground)' className='tabular'>
-        {tem ? compacto(v.votosF) : '–'}
+      <text x={19} y={30} fontSize={10.5} fill='var(--foreground)' fontWeight={fLidera ? 700 : 400} className='tabular'>
+        {tem ? num(v.votosF) : '–'}
+        {fLidera && <tspan fill='var(--flavio)'> ▲</tspan>}
       </text>
       <rect x={8} y={36} width={7} height={7} rx={1.5} fill='var(--lula)' />
-      <text x={19} y={43} fontSize={10.5} fill='var(--foreground)' className='tabular'>
-        {tem ? compacto(v.votosL) : '–'}
+      <text x={19} y={43} fontSize={10.5} fill='var(--foreground)' fontWeight={lLidera ? 700 : 400} className='tabular'>
+        {tem ? num(v.votosL) : '–'}
+        {lLidera && <tspan fill='var(--lula)'> ▲</tspan>}
       </text>
     </g>
   )
