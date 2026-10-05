@@ -97,7 +97,8 @@ export function useVivo(ativo: boolean) {
         } catch {
           /* uma UF falhou: tenta no próximo ciclo */
         }
-        await new Promise((ok) => setTimeout(ok, 120))
+        // espaçado: várias pessoas na mesma rede (mesmo IP) não estouram o limite de pedidos do TSE
+        await new Promise((ok) => setTimeout(ok, 400))
       }
       return out
     },
