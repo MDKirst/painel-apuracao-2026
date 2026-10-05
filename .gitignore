@@ -1,0 +1,10 @@
+# dados brutos do TSE (dezenas de MB; regeneráveis com scripts/coleta_1turno.py)
+data/raw/
+data/coleta.log
+__pycache__/
+.claude/
+*.tmp
+node_modules/
+dist/
+.playwright-mcp/
+*.log
