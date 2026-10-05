@@ -54,12 +54,13 @@ export function useMomento(): Momento {
     if (x)
       porUf[uf] = {
         pct: x[0],
-        // % calculado dos votos exatos (a série guarda votos inteiros)
-        flavio: x[3] > 0 ? (100 * x[4]) / x[3] : undefined,
-        lula: x[3] > 0 ? (100 * x[5]) / x[3] : undefined,
+        // % calculado dos votos exatos (a série guarda votos inteiros);
+        // arquivo antigo (sem as colunas de votos) cai no cálculo pelo %
+        flavio: x[3] > 0 ? (x[4] != null ? (100 * x[4]) / x[3] : (x[1] ?? undefined)) : undefined,
+        lula: x[3] > 0 ? (x[5] != null ? (100 * x[5]) / x[3] : (x[2] ?? undefined)) : undefined,
         validos: x[3],
-        votosF: x[3] > 0 ? x[4] : undefined,
-        votosL: x[3] > 0 ? x[5] : undefined,
+        votosF: x[3] > 0 ? (x[4] ?? (x[1] != null ? Math.round((x[1] * x[3]) / 100) : undefined)) : undefined,
+        votosL: x[3] > 0 ? (x[5] ?? (x[2] != null ? Math.round((x[2] * x[3]) / 100) : undefined)) : undefined,
         eleitores: h.ufs[uf]?.eleitores,
       }
   }
@@ -68,8 +69,8 @@ export function useMomento(): Momento {
     pct: br[0],
     flavio: br[1] ?? undefined,
     lula: br[2] ?? undefined,
-    votosF: br[3] > 0 ? br[4] : undefined,
-    votosL: br[3] > 0 ? br[5] : undefined,
+    votosF: br[3] > 0 ? (br[4] ?? (br[1] != null ? Math.round((br[1] * br[3]) / 100) : undefined)) : undefined,
+    votosL: br[3] > 0 ? (br[5] ?? (br[2] != null ? Math.round((br[2] * br[3]) / 100) : undefined)) : undefined,
     validos: br[3],
     projF: pj[0] ?? undefined,
     projL: pj[1] ?? undefined,

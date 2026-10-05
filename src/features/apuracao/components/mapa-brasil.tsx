@@ -30,7 +30,7 @@ const ALT = 50
 function useMapa() {
   return useQuery<Mapa>({
     queryKey: ['mapa-uf'],
-    queryFn: async () => (await fetch(`${import.meta.env.BASE_URL}data/mapa-uf.json`)).json(),
+    queryFn: async () => (await fetch(`${import.meta.env.BASE_URL}data/mapa-uf.json?v=${__BUILD__}`)).json(),
     staleTime: Infinity,
   })
 }

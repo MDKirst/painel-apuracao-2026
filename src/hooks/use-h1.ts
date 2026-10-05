@@ -9,7 +9,7 @@ export type H1Derivado = H1 & {
 }
 
 async function carregar(): Promise<H1Derivado> {
-  const r = await fetch(`${import.meta.env.BASE_URL}data/1turno.json`)
+  const r = await fetch(`${import.meta.env.BASE_URL}data/1turno.json?v=${__BUILD__}`)
   if (!r.ok) throw new Error('Não foi possível carregar os dados do 1º turno')
   const h: H1 = await r.json()
   const t0 = Date.parse(h.serie.inicio)
