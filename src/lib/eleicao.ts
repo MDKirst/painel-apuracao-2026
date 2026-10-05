@@ -104,19 +104,26 @@ export const hhmm = (ms: number) =>
 export const siglaUF = (uf: string) => (uf === 'zz' ? 'EXT' : uf.toUpperCase())
 
 // escala divergente da margem (Flávio + / Lula −) em 7 faixas
+// Todo estado leva a cor de quem está na frente; a intensidade mostra a vantagem.
+// (Uma faixa cinza "±3" fazia um estado vencido por 225 votos parecer sem resultado.)
 export const FAIXAS_MARGEM = [
   { min: 20, cor: 'var(--d-f3)', rotulo: 'Flávio +20' },
   { min: 10, cor: 'var(--d-f2)', rotulo: '+10' },
   { min: 3, cor: 'var(--d-f1)', rotulo: '+3' },
-  { min: -3, cor: 'var(--neutro)', rotulo: '±3' },
-  { min: -10, cor: 'var(--d-l1)', rotulo: 'Lula +3' },
+  { min: 0, cor: 'var(--d-f0)', rotulo: 'até 3' },
+  { min: -3, cor: 'var(--d-l0)', rotulo: 'Lula até 3' },
+  { min: -10, cor: 'var(--d-l1)', rotulo: '+3' },
   { min: -20, cor: 'var(--d-l2)', rotulo: '+10' },
   { min: -Infinity, cor: 'var(--d-l3)', rotulo: '+20' },
 ]
 export function corMargem(m: number | null | undefined) {
   if (m == null || Number.isNaN(m)) return null
-  if (m > -3 && m < 3) return FAIXAS_MARGEM[3].cor
-  return (FAIXAS_MARGEM.find((f) => m >= f.min) ?? FAIXAS_MARGEM[6]).cor
+  if (m === 0) return 'var(--neutro)' // empate exato
+  if (m > 0) return (FAIXAS_MARGEM.find((f) => f.min >= 0 && m >= f.min) ?? FAIXAS_MARGEM[3]).cor
+  if (m > -3) return FAIXAS_MARGEM[4].cor
+  if (m > -10) return FAIXAS_MARGEM[5].cor
+  if (m > -20) return FAIXAS_MARGEM[6].cor
+  return FAIXAS_MARGEM[7].cor
 }
 // texto legível sobre uma faixa: token CSS par (--d-f3 → --t-f3), troca sozinho com o tema
 export function textoSobre(corCss: string) {

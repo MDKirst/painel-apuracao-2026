@@ -91,24 +91,24 @@
   --flavio: #2a78d6;
   --lula: #e34948;
   --neutro: #e7e5e0;
-  --d-f3: #184f95; --d-f2: #3987e5; --d-f1: #9ec5f4;
-  --d-l1: #f4aaa6; --d-l2: #e34948; --d-l3: #a32626;
+  --d-f3: #184f95; --d-f2: #3987e5; --d-f1: #9ec5f4; --d-f0: #d9e8fb;
+  --d-l0: #fbdedc; --d-l1: #f4aaa6; --d-l2: #e34948; --d-l3: #a32626;
   --r-norte: #1baf7a; --r-nordeste: #eda100; --r-co: #4a3aa7;
   --r-sudeste: #e87ba4; --r-sul: #008300; --r-exterior: #8a8984;
   /* texto legível sobre cada faixa do mapa */
-  --t-f3: #fff; --t-f2: #fff; --t-f1: #0b0b0b; --t-neutro: #0b0b0b;
-  --t-l1: #0b0b0b; --t-l2: #fff; --t-l3: #fff;
+  --t-f3: #fff; --t-f2: #fff; --t-f1: #0b0b0b; --t-f0: #0b0b0b; --t-neutro: #0b0b0b;
+  --t-l0: #0b0b0b; --t-l1: #0b0b0b; --t-l2: #fff; --t-l3: #fff;
 }
 .dark {
   --flavio: #3987e5;
   --lula: #e66767;
   --neutro: #383835;
-  --d-f3: #86b6ef; --d-f2: #3987e5; --d-f1: #1c5cab;
-  --d-l1: #8f2b2b; --d-l2: #e66767; --d-l3: #f4aaa6;
+  --d-f3: #86b6ef; --d-f2: #3987e5; --d-f1: #1c5cab; --d-f0: #173a63;
+  --d-l0: #5c2626; --d-l1: #8f2b2b; --d-l2: #e66767; --d-l3: #f4aaa6;
   --r-norte: #199e70; --r-nordeste: #c98500; --r-co: #9085e9;
   --r-sudeste: #d55181; --r-sul: #008300; --r-exterior: #8a8984;
-  --t-f3: #0b0b0b; --t-f2: #fff; --t-f1: #fff; --t-neutro: #fff;
-  --t-l1: #fff; --t-l2: #0b0b0b; --t-l3: #0b0b0b;
+  --t-f3: #0b0b0b; --t-f2: #fff; --t-f1: #fff; --t-f0: #fff; --t-neutro: #fff;
+  --t-l0: #fff; --t-l1: #fff; --t-l2: #0b0b0b; --t-l3: #0b0b0b;
 }
 .tabular { font-variant-numeric: tabular-nums; }
 input[type='range'].cursor-replay { accent-color: var(--primary); }

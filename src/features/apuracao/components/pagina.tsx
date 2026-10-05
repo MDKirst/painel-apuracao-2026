@@ -26,6 +26,13 @@ export function Pagina({ titulo, sub, children }: { titulo: string; sub?: React.
         ) : (
           <div className='space-y-4'>{children}</div>
         )}
+        <footer className='mt-10 border-t pt-4 text-center text-xs text-muted-foreground'>
+          <p>
+            <b className='font-medium text-foreground'>Projeto educacional, sem fins políticos.</b> Feito para explicar como funciona a
+            apuração. Não apoia nenhum candidato e não tem vínculo com o TSE, partidos ou campanhas.
+          </p>
+          <p className='mt-1'>Dados públicos do Tribunal Superior Eleitoral. O resultado oficial é sempre o do TSE.</p>
+        </footer>
       </Main>
     </>
   )

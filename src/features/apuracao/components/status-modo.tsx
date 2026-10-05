@@ -19,7 +19,7 @@ export function StatusModo() {
           <p>Replay da noite, reconstruído urna a urna.</p>
         </>
       )}
-      <p className='mt-2'>Fonte: TSE. Projeto aberto, sem vínculo com campanhas.</p>
+      <p className='mt-2'>Projeto educacional, sem fins políticos. Fonte: TSE.</p>
     </div>
   )
 }

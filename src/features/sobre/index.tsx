@@ -67,6 +67,14 @@ export function Sobre() {
         </Card>
       </div>
       <Alert>
+        <AlertTitle>Projeto educacional, sem fins políticos</AlertTitle>
+        <AlertDescription>
+          Este painel foi feito para ensinar como funciona a apuração: por que o placar muda durante a noite, de onde vêm os votos e
+          como ler os números. Não apoia, critica ou promove nenhum candidato ou partido, e não tem vínculo com o TSE, partidos ou
+          campanhas. As cores (azul e vermelho) só identificam os candidatos.
+        </AlertDescription>
+      </Alert>
+      <Alert>
         <AlertTitle>Projeção não é resultado</AlertTitle>
         <AlertDescription>
           O resultado oficial é sempre o do TSE. "Direita/esquerda" nos blocos é uma simplificação; a medida principal deste painel

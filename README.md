@@ -1,5 +1,7 @@
 # Painel da Apuração · Presidente 2026
 
+> **Projeto educacional, sem fins políticos.** Feito para explicar como funciona a apuração e como ler os números. Não apoia, critica ou promove nenhum candidato ou partido, e não tem vínculo com o TSE, partidos ou campanhas. O resultado oficial é sempre o do TSE.
+
 Painel aberto para acompanhar a apuração para presidente **lendo direto os arquivos públicos do TSE**. Ele explica, em linguagem simples, **quais regiões chegam primeiro** e **por que o placar parcial engana** durante a noite.
 
 - **2º turno · ao vivo (25/10/2026):** o navegador consulta o TSE a cada 15 s. Não há servidor intermediário: o TSE libera CORS.
@@ -92,4 +94,4 @@ Depois do 2º turno: `python scripts/coleta_1turno.py --ele 6258 --pleito <códi
 - **Blocos "direita/esquerda":** classificação simplificada e editável (`BLOCO` em `scripts/analisa_1turno.py`). O indicador principal é a margem Flávio − Lula.
 - **Cores:** azul = Flávio, vermelho = Lula. As cores das regiões vêm de uma paleta validada para daltonismo.
 
-Sem vínculo com o TSE, partidos ou campanhas. O resultado oficial é sempre o do TSE.
+Projeto educacional, sem fins políticos e sem vínculo com o TSE, partidos ou campanhas. O resultado oficial é sempre o do TSE.
