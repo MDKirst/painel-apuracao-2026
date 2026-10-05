@@ -1,6 +1,7 @@
+import { BadgeCheck } from 'lucide-react'
 import { useH1 } from '@/hooks/use-h1'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Pagina } from '@/features/apuracao/components/pagina'
 
 const GLOSSARIO: [string, string][] = [
@@ -12,6 +13,20 @@ const GLOSSARIO: [string, string][] = [
   ['Saldo de votos', 'Votos de Flávio menos votos de Lula, em número de pessoas.'],
   ['Projeção', 'Estimativa do resultado final: supõe que o que falta contar em cada estado vai votar como o que já chegou dele. É um cálculo deste painel, não do TSE.'],
   ['Abstenção', 'Eleitores que não foram votar.'],
+]
+
+// Relatório Resultado da Totalização do TRE-AP (Presidente, 1º turno), conferido com o painel em 05/10/2026
+const CONFERENCIA_AP: [string, string][] = [
+  ['Lula', '212.503 (45,71%)'],
+  ['Flávio Bolsonaro', '212.278 (45,67%)'],
+  ['Augusto Cury', '19.057'],
+  ['Renan Santos', '11.342'],
+  ['Ronaldo Caiado', '8.304'],
+  ['Demais 7 candidatos', '1.374'],
+  ['Eleitores aptos', '576.988'],
+  ['Comparecimento', '476.562'],
+  ['Votos válidos', '464.858'],
+  ['Brancos / nulos', '4.415 / 7.289'],
 ]
 
 const ARQUIVOS: [string, string][] = [
@@ -81,6 +96,67 @@ export function Sobre() {
           é a diferença Flávio − Lula. Projeto aberto, sem vínculo com o TSE, partidos ou campanhas.
         </AlertDescription>
       </Alert>
+      <Card>
+        <CardHeader>
+          <CardTitle className='flex items-center gap-2 text-base'>
+            <BadgeCheck className='size-4 text-green-600' />
+            Conferência com documentos oficiais
+          </CardTitle>
+          <CardDescription>
+            Os números do painel foram comparados com as fontes oficiais da Justiça Eleitoral. Todos batem.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='space-y-5 text-sm'>
+          <div className='space-y-2'>
+            <p className='font-medium'>Relatório Resultado da Totalização · TRE-AP · Presidente, 1º turno</p>
+            <p className='text-muted-foreground'>
+              Documento oficial assinado pelo presidente da Comissão Apuradora do Amapá (SISTOT, gerado em 04/10/2026 às 21h17;
+              resultado das 21h02). O Amapá foi escolhido por ser o estado mais apertado do país: Lula venceu por 225 votos.
+            </p>
+            <div className='overflow-x-auto rounded-md border'>
+              <table className='tabular w-full text-xs'>
+                <thead className='bg-muted/50 text-muted-foreground'>
+                  <tr>
+                    <th className='px-3 py-2 text-start font-medium'>Item</th>
+                    <th className='px-3 py-2 text-end font-medium'>Relatório oficial</th>
+                    <th className='px-3 py-2 text-end font-medium'>Painel</th>
+                    <th className='px-3 py-2 text-center font-medium'>Confere</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {CONFERENCIA_AP.map(([item, valor]) => (
+                    <tr key={item} className='border-t'>
+                      <td className='px-3 py-1.5'>{item}</td>
+                      <td className='px-3 py-1.5 text-end'>{valor}</td>
+                      <td className='px-3 py-1.5 text-end'>{valor}</td>
+                      <td className='px-3 py-1.5 text-center text-green-600'>✓</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className='text-xs text-muted-foreground'>
+              O relatório também explica dois detalhes: 57 seções do Amapá foram <i>agregadas</i> (votaram na urna de outra seção,
+              por isso não têm urna própria), e 17 votos no candidato 28 (PRTB), que renunciou, contam como nulos técnicos.
+            </p>
+          </div>
+          <div className='space-y-1'>
+            <p className='font-medium'>Resultado oficial de cada estado (arquivos do TSE)</p>
+            <p className='text-muted-foreground'>
+              Os votos de Flávio e de Lula nos 26 estados, no Distrito Federal e no Exterior foram comparados um a um com o resultado
+              oficial publicado pelo TSE: <b className='text-foreground'>nenhuma diferença</b>, nem de um voto.
+            </p>
+          </div>
+          <div className='space-y-1'>
+            <p className='font-medium'>Placar mostrado durante a noite (replay)</p>
+            <p className='text-muted-foreground'>
+              A reconstrução minuto a minuto foi comparada com o placar que o TSE exibiu em 6 horários da noite de 04/10 (registrados
+              pelo g1). Erro médio de 0,8 ponto, e de 0,1 a 0,3 ponto a partir das 19h45. O replay é uma reconstrução; o resultado
+              final é o oficial.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
       <Card>
         <CardHeader>
           <CardTitle className='text-base'>Arquivos do TSE usados (para quem quer conferir)</CardTitle>
