@@ -105,7 +105,11 @@ export function useVivo(ativo: boolean) {
   })
 
   const porUf: Record<string, UFVivo> = {}
-  for (const uf of UFS) porUf[uf] = { ...br.data?.andamento[uf], ...ufs.data?.[uf] }
+  for (const uf of UFS) {
+    const and = br.data?.andamento[uf], det = ufs.data?.[uf]
+    // o arquivo da UF costuma atrasar em relação ao resumo nacional: não deixa ele zerar o andamento
+    porUf[uf] = { ...and, ...det, pct: Math.max(and?.pct ?? 0, det?.pct ?? 0) }
+  }
   const resultado: ResultadoTSE | undefined = br.data?.resultado ?? undefined
   const proj = resultado ? projetar(porUf, h1) : null
 
