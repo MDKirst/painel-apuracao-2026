@@ -19,6 +19,7 @@ import { useH1 } from './use-h1'
 export const ELE_VIVO = new URLSearchParams(location.search).get('ele') || '6258' // 2º turno
 export const POLL_BR = 15_000
 const POLL_UF = 60_000
+const PCT_MIN_PROJ = 2
 const CHAVE = `apuracao-hist-${ELE_VIVO}`
 
 export type PontoHist = {
@@ -111,7 +112,8 @@ export function useVivo(ativo: boolean) {
     porUf[uf] = { ...and, ...det, pct: Math.max(and?.pct ?? 0, det?.pct ?? 0) }
   }
   const resultado: ResultadoTSE | undefined = br.data?.resultado ?? undefined
-  const proj = resultado ? projetar(porUf, h1) : null
+  // com pouquíssimas urnas a projeção vira o retrato de 1–2 estados (e a "chance" vai a 100%): espera um mínimo
+  const proj = resultado && resultado.pct >= PCT_MIN_PROJ ? projetar(porUf, h1) : null
 
   const [hist, setHist] = useState<PontoHist[]>(lerHist)
   const pct = resultado?.pct
